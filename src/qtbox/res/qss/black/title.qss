@@ -1,0 +1,18 @@
+QWidget#windowTitle {
+    background-color: #3b3f42;
+}
+
+
+QPushButton#minimizeBtn, QPushButton#maximizeNormalBtn, QPushButton#closeBtn {
+    background-color: #3b3f42;
+    border-radius: 3px;
+    border: none;
+}
+
+QPushButton#minimizeBtn:hover, QPushButton#maximizeNormalBtn:hover, QPushButton#closeBtn:hover {
+    background-color: rgba(255, 255, 255, 80);
+}
+
+QPushButton#minimizeBtn:pressed, QPushButton#maximizeNormalBtn:pressed, QPushButton#closeBtn:pressed {
+    background-color: rgba(255, 255, 255, 50);
+}

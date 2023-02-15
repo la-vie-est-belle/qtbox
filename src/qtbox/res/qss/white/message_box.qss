@@ -1,0 +1,61 @@
+QLabel#titleLabel {
+    color: #2676bf;
+    font-size: 15px;
+    font-weight: bold;
+    font-family: "Arial";
+}
+
+QTextBrowser#contentBrowser {
+    background-color: white;
+    color: black;
+    border: none;
+    font-family: "Arial";
+}
+
+QPushButton#confirmBtn {
+    border: none;
+    background-color: #2676bf;
+    font-size: 13px;
+    color: #f0f0f0;
+    border-radius: 2px;
+}
+
+QPushButton#confirmBtn:hover {
+    background-color: #3d88cd;
+}
+
+QPushButton#confirmBtn:pressed {
+    background-color: #2676bf;
+}
+
+QPushButton#closeBtn {
+    background-color: #f2f2f2;
+    border: none;
+    border-radius: 2px;
+}
+
+QPushButton#closeBtn:hover {
+    background-color: rgba(255, 255, 255, 150);
+}
+
+QPushButton#closeBtn:pressed {
+    background-color: rgba(255, 255, 255, 120);
+}
+
+QScrollBar:vertical {
+    width: 2px;
+    background-color: white;
+}
+
+QScrollBar::handle:vertical {
+    background-color: #b2bdaf;
+}
+
+QScrollBar:horizontal {
+    height: 2px;
+    background-color: white;
+}
+
+QScrollBar::handle:horizontal {
+    background-color: #b2bdaf;
+}

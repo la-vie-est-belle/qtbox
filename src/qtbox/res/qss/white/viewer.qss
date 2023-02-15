@@ -1,0 +1,26 @@
+QTextBrowser#codeViewer {
+    background-color: white;
+    border: none;
+}
+
+QPushButton#copyBtn, QPushButton#switchBtn {
+    border: none;
+}
+
+QScrollBar:vertical {
+    width: 2px;
+    background-color: white;
+}
+
+QScrollBar::handle:vertical {
+    background-color: #b2bdaf;
+}
+
+QScrollBar:horizontal {
+    height: 2px;
+    background-color: white;
+}
+
+QScrollBar::handle:horizontal {
+    background-color: #b2bdaf;
+}
