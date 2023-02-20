@@ -8,6 +8,7 @@ from PyQt5.QtGui import *
 from PyQt5.QtCore import *
 from PyQt5.QtWidgets import *
 
+from qtbox.utils.editor import QSSEditor
 from qtbox.utils.viewer import CodeViewer
 from qtbox.utils.message import MessageBox
 from qtbox.utils.title import TitleWidget as WindowTitle
@@ -32,21 +33,14 @@ from qtbox.slider import func as func_slider
 from qtbox.slider import style as style_slider
 from qtbox.spinbox import func as func_spinbox
 from qtbox.spinbox import style as style_spinbox
+from qtbox.widget import func as func_widget
+from qtbox.widget import style as style_widget
 
-VERSION = "1.0.0"
+VERSION = "1.1.0"
 
 UPDATES = """
-1. Added 4 style demos and 2 func demos for QCheckBox.\n
-2. Added 3 style demos and 2 func demos for QComboBox.\n
-3. Added 3 style demos and 1 func demo for QDial.\n
-4. Added 4 style demos and 6 func demos for QLabel.\n
-5. Added 5 style demos and 3 func demos for QLCDNumber.\n
-6. Added 7 style demos and 4 func demos for QLineEdit.\n 
-7. Added 9 style demos and 2 func demos for QProgressBar.\n
-8. Added 10 style demos and 3 func demos for QPushButton.\n
-9. Added 5 style demos and 1 func demo for QSlider.\n
-10. Added 1 style demo and 1 func demo for QSpinBox.\n
-11. Added two themes: white and black.
+1. Added QSS Editor.\n
+2. Added 2 style demos and 1 func demo for QWidget.
 """
 
 RES_PATH = Path(__file__).parent / "res"
@@ -61,7 +55,7 @@ class WindowBody(QWidget):
         self.btn_list = [QPushButton(txt) for txt in ["QCheckBox", "QComboBox", "QDial",
                                                       "QLabel", "QLCDNumber", "QLineEdit",
                                                       "QProgressBar", "QPushButton", "QSlider",
-                                                      "QSpinBox"]]
+                                                      "QSpinBox", "QWidget"]]
 
         self.func_widget = QWidget()
         self.style_widget = QWidget()
@@ -69,10 +63,12 @@ class WindowBody(QWidget):
         self.style_tab = QScrollArea()
         self.tab_widget = QTabWidget()
 
+        self.editor_btn = QPushButton()
         self.doc_btn = QPushButton()
         self.about_btn = QPushButton()
         self.switch_btn = QPushButton()
 
+        self.qss_editor = QSSEditor()
         self.code_viewer = CodeViewer()
         self.message_box = MessageBox()
 
@@ -142,6 +138,11 @@ class WindowBody(QWidget):
             "style": [style_spinbox.demo1.QtBoxStyleSpinBox1]
         }
 
+        self.widget_dict = {
+            "func": [func_widget.demo1.QtBoxFuncWidget1],
+            "style": [style_widget.demo1.QtBoxStyleWidget1, style_widget.demo2.QtBoxStyleWidget2]
+        }
+
         self.set_up()
 
     def set_up(self):
@@ -162,6 +163,7 @@ class WindowBody(QWidget):
         for btn in self.btn_list:
             btn.setObjectName("listBtn")
 
+        self.editor_btn.setObjectName("editorBtn")
         self.doc_btn.setObjectName("docBtn")
         self.about_btn.setObjectName("aboutBtn")
         self.switch_btn.setObjectName("switchBtn")
@@ -192,15 +194,19 @@ class WindowBody(QWidget):
         self.tab_widget.addTab(self.style_tab, "Style")
         self.tab_widget.addTab(self.func_tab, "Function")
 
+        self.editor_btn.setFixedWidth(30)
         self.doc_btn.setFixedWidth(30)
         self.about_btn.setFixedWidth(30)
         self.switch_btn.setFixedWidth(30)
+        self.editor_btn.setToolTip("Open QSS editor")
         self.doc_btn.setToolTip("Open documentation")
         self.about_btn.setToolTip("Show updates")
         self.switch_btn.setToolTip("Switch theme")
+        self.editor_btn.setCursor(Qt.PointingHandCursor)
         self.doc_btn.setCursor(Qt.PointingHandCursor)
         self.about_btn.setCursor(Qt.PointingHandCursor)
         self.switch_btn.setCursor(Qt.PointingHandCursor)
+        self.editor_btn.setIcon(QIcon(str(RES_PATH / "images/editor.png")))
         self.doc_btn.setIcon(QIcon(str(RES_PATH / "images/doc.png")))
         self.about_btn.setIcon(QIcon(str(RES_PATH / "images/about.png")))
         self.switch_btn.setIcon(QIcon(str(RES_PATH / "images/switch.png")))
@@ -216,6 +222,7 @@ class WindowBody(QWidget):
         for btn in self.btn_list:
             btn.clicked.connect(self.change_widget)
 
+        self.editor_btn.clicked.connect(self.open_editor)
         self.doc_btn.clicked.connect(self.open_doc)
         self.about_btn.clicked.connect(self.show_updates)
         self.switch_btn.clicked.connect(self.switch_theme)
@@ -234,10 +241,11 @@ class WindowBody(QWidget):
             self.btn_list_widget.addItem(item)
             self.btn_list_widget.setItemWidget(item, btn)
 
+        h_layout1.addWidget(self.editor_btn)
         h_layout1.addWidget(self.doc_btn)
         h_layout1.addWidget(self.about_btn)
         h_layout1.addWidget(self.switch_btn)
-        h_layout1.setSpacing(80)
+        h_layout1.setSpacing(50)
 
         v_layout1.addLayout(h_layout1)
         v_layout1.addWidget(self.btn_list_widget)
@@ -313,6 +321,9 @@ class WindowBody(QWidget):
         elif btn_txt == "QSpinBox":
             widget_list = self.spinbox_dict[key]
 
+        elif btn_txt == "QWidget":
+            widget_list = self.widget_dict[key]
+
         if tab_index == 0:
             self.set_style_tab_content(widget_list)
         else:
@@ -380,6 +391,9 @@ class WindowBody(QWidget):
 
         return pyqt_code, pyside_code
 
+    def open_editor(self):
+        self.qss_editor.show()
+
     @staticmethod
     def open_doc():
         webbrowser.open("https://github.com/la-vie-est-belle/qtbox")
@@ -393,6 +407,7 @@ class WindowBody(QWidget):
 
     def reload_style_sheet(self):
         self.set_style_sheet()
+        self.qss_editor.reload_style_sheet()
         self.code_viewer.reload_style_sheet()
         self.message_box.reload_style_sheet()
 

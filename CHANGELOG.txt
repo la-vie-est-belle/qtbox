@@ -1,0 +1,16 @@
+v1.1.0
+1. Added QSS Editor.
+2. Added 2 style demos and 1 func demo for QWidget.
+
+v1.0.0
+1. Added 4 style demos and 2 func demos for QCheckBox.
+2. Added 3 style demos and 2 func demos for QComboBox.
+3. Added 3 style demos and 1 func demo for QDial.
+4. Added 4 style demos and 6 func demos for QLabel.
+5. Added 5 style demos and 3 func demos for QLCDNumber.
+6. Added 7 style demos and 4 func demos for QLineEdit.
+7. Added 9 style demos and 2 func demos for QProgressBar.
+8. Added 10 style demos and 3 func demos for QPushButton.
+9. Added 5 style demos and 1 func demo for QSlider.
+10. Added 1 style demo and 1 func demo for QSpinBox.
+11. Added two themes: white and black.

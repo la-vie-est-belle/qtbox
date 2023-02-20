@@ -1,0 +1,81 @@
+QPlainTextEdit#customEdit {
+    background-color: white;
+    border-top: none;
+    color: black;
+    font-family: "Arial";
+}
+
+QPushButton#copyBtn {
+    border: none;
+}
+
+QAbstractItemView#completer {
+    background-color: #f2f2f2;
+    color: black;
+    font-weight: bold;
+    padding-top: 2px;
+}
+
+QScrollBar:vertical {
+    width: 2px;
+    background-color: white;
+}
+
+QScrollBar::handle:vertical {
+    background-color: #b2bdaf;
+}
+
+QScrollBar:horizontal {
+    height: 2px;
+    background-color: white;
+}
+
+QScrollBar::handle:horizontal {
+    background-color: #b2bdaf;
+}
+
+QWidget#displayWidget {
+    background-color: white;
+}
+
+QComboBox#widgetComboBox {
+    background-color: white;
+    border: 1px solid lightgray;
+    font-weight: bold;
+    color: black;
+    padding-left: 15px;
+    padding-right: 12px;
+    height: 20px;
+    font-family: "Arial";
+}
+
+QComboBox#widgetComboBox::drop-down {
+    width: 13px;
+}
+
+QComboBox#widgetComboBox QAbstractItemView {
+    color: black;
+    border: none;
+    outline: none;
+    font-size: 12px;
+    background-color: #f2f2f2;
+}
+
+QComboBox#widgetComboBox QScrollBar:vertical {
+    width: 2px;
+    background-color: white;
+}
+
+QComboBox#widgetComboBox QScrollBar::handle:vertical {
+    background-color: #b2bdaf;
+}
+
+QSplitter#qssEditorBody {
+    border-top: 1px solid lightgray;
+    background-color: #f2f2f2;
+}
+
+QSplitter#qssEditorBody::handle {
+    background-color: #f2f2f2;
+    width: 1px;
+}

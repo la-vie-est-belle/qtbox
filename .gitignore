@@ -1,0 +1,5 @@
+__pycache__
+dist
+.idea
+.DS_Store
+pyproject.toml

@@ -4,7 +4,7 @@
         <img src="https://img.shields.io/badge/Qt Box-Open Source-green.svg" />
     </a>
     <a href="javascript:;">
-        <img src="https://img.shields.io/badge/Version-1.0.0-blue.svg" />
+        <img src="https://img.shields.io/badge/Version-1.1.0-blue.svg" />
     </a>
     <a href="javascript:;">
         <img src="https://img.shields.io/badge/For-PyQt and PySide-dark.svg" />
@@ -17,6 +17,9 @@
     </a>
     <a href="javascript:;">
         <img src="https://img.shields.io/badge/License-GPL v3-red.svg" />
+    </a>
+    <a href="javascript:;">
+        <img src="https://img.shields.io/badge/With-QSS Editor-brown.svg" />
     </a>
 </p>
 
@@ -37,8 +40,15 @@ Right-click on a widget shown in the Style tab or Function tab, then you can vie
 When viewing the code, you can click on the switch button to show PyQt or PySide code.
 <img src="https://img-blog.csdnimg.cn/ab1828e5b1024ece81e4388ff96ac48a.png" width="600">
 
+On the main window, click on the switch button to change the window theme.
+<img src="https://img-blog.csdnimg.cn/a0a84cf9b50b4f92a52f0f65e1664196.png" width="600">
+
+Click on the edit button or type `qtbox-qss` in the command window to open QSS Editor.
+<img src="https://img-blog.csdnimg.cn/7289f04c21824d0986f6adcb96a4be2e.png" width="600">
+
 ## Other links
 - [Github](https://github.com/la-vie-est-belle/qtbox)
-- [CSDN](https://blog.csdn.net/La_vie_est_belle)
+- [CSDN](https://blog.csdn.net/La_vie_est_belle/article/details/129037040)
 - [Bilibili](https://space.bilibili.com/414891732)
-- [知乎](https://www.zhihu.com/people/la-vie-est-belle)
+- [知乎](https://zhuanlan.zhihu.com/p/606612591)
+- [PyPi](https://pypi.org/project/qtbox/)
