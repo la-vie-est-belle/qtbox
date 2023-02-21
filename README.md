@@ -4,7 +4,7 @@
         <img src="https://img.shields.io/badge/Qt Box-Open Source-green.svg" />
     </a>
     <a href="javascript:;">
-        <img src="https://img.shields.io/badge/Version-1.1.0-blue.svg" />
+        <img src="https://img.shields.io/badge/Version-1.1.1-blue.svg" />
     </a>
     <a href="javascript:;">
         <img src="https://img.shields.io/badge/For-PyQt and PySide-dark.svg" />

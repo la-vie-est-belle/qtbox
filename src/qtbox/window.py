@@ -25,6 +25,8 @@ from qtbox.lcdnumber import func as func_lcdnumber
 from qtbox.lcdnumber import style as style_lcdnumber
 from qtbox.lineedit import func as func_lineedit
 from qtbox.lineedit import style as style_lineedit
+from qtbox.listwidget import func as func_listwidget
+from qtbox.listwidget import style as style_listwidget
 from qtbox.progressbar import func as func_progressbar
 from qtbox.progressbar import style as style_progressbar
 from qtbox.pushbutton import func as func_pushbutton
@@ -36,11 +38,14 @@ from qtbox.spinbox import style as style_spinbox
 from qtbox.widget import func as func_widget
 from qtbox.widget import style as style_widget
 
-VERSION = "1.1.0"
+VERSION = "1.1.1"
 
 UPDATES = """
 1. Added QSS Editor.\n
-2. Added 2 style demos and 1 func demo for QWidget.
+2. Added 1 func demo for QLabel.\n
+3. Added 1 style demo for QPushButton.\n
+4. Added 1 style demo and 1 func demo for QListWidget.\n
+5. Fixed crash problem when showing QDial, QProgress and QPushButton style demos.
 """
 
 RES_PATH = Path(__file__).parent / "res"
@@ -54,9 +59,8 @@ class WindowBody(QWidget):
         self.btn_list_widget = QListWidget()
         self.btn_list = [QPushButton(txt) for txt in ["QCheckBox", "QComboBox", "QDial",
                                                       "QLabel", "QLCDNumber", "QLineEdit",
-                                                      "QProgressBar", "QPushButton", "QSlider",
-                                                      "QSpinBox", "QWidget"]]
-
+                                                      "QListWidget", "QProgressBar", "QPushButton",
+                                                      "QSlider", "QSpinBox", "QWidget"]]
         self.func_widget = QWidget()
         self.style_widget = QWidget()
         self.func_tab = QScrollArea()
@@ -93,7 +97,8 @@ class WindowBody(QWidget):
 
         self.label_dict = {
             "func": [func_label.demo1.QtBoxFuncLabel1, func_label.demo2.QtBoxFuncLabel2, func_label.demo3.QtBoxFuncLabel3,
-                     func_label.demo4.QtBoxFuncLabel4, func_label.demo5.QtBoxFuncLabel5, func_label.demo6.QtBoxFuncLabel6],
+                     func_label.demo4.QtBoxFuncLabel4, func_label.demo5.QtBoxFuncLabel5, func_label.demo6.QtBoxFuncLabel6,
+                     func_label.demo7.QtBoxFuncLabel7],
             "style": [style_label.demo1.QtBoxStyleLabel1, style_label.demo2.QtBoxStyleLabel2, style_label.demo3.QtBoxStyleLabel3,
                       style_label.demo4.QtBoxStyleLabel4]
         }
@@ -112,6 +117,11 @@ class WindowBody(QWidget):
                       style_lineedit.demo7.QtBoxStyleLineEdit7]
         }
 
+        self.listwidget_dict = {
+            "func": [func_listwidget.demo1.QtBoxFuncListWidget1],
+            "style": [style_listwidget.demo1.QtBoxStyleListWidget1]
+        }
+
         self.progressbar_dict = {
             "func": [func_progressbar.demo1.QtBoxFuncProgressBar1, func_progressbar.demo2.QtBoxFuncProgressBar2],
             "style": [style_progressbar.demo1.QtBoxStyleProgressBar1, style_progressbar.demo2.QtBoxStyleProgressBar2, style_progressbar.demo3.QtBoxStyleProgressBar3,
@@ -124,7 +134,7 @@ class WindowBody(QWidget):
             "style": [style_pushbutton.demo1.QtBoxStyleButton1, style_pushbutton.demo2.QtBoxStyleButton2, style_pushbutton.demo3.QtBoxStyleButton3,
                       style_pushbutton.demo4.QtBoxStyleButton4, style_pushbutton.demo5.QtBoxStyleButton5, style_pushbutton.demo6.QtBoxStyleButton6,
                       style_pushbutton.demo7.QtBoxStyleButton7, style_pushbutton.demo8.QtBoxStyleButton8, style_pushbutton.demo9.QtBoxStyleButton9,
-                      style_pushbutton.demo10.QtBoxStyleButton10]
+                      style_pushbutton.demo10.QtBoxStyleButton10, style_pushbutton.demo11.QtBoxStyleButton11]
         }
 
         self.slider_dict = {
@@ -308,6 +318,9 @@ class WindowBody(QWidget):
 
         elif btn_txt == "QLineEdit":
             widget_list = self.lineedit_dict[key]
+
+        elif btn_txt == "QListWidget":
+            widget_list = self.listwidget_dict[key]
 
         elif btn_txt == "QProgressBar":
             widget_list = self.progressbar_dict[key]

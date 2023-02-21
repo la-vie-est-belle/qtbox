@@ -40,7 +40,7 @@ class QtBoxStyleProgressBar8(QProgressBar):
         painter.setFont(font)
         font_metrics = QFontMetricsF(font)
         text_width = font_metrics.width(self.text())
-        painter.drawText(self.width()/2-text_width/2, 45, self.text())
+        painter.drawText(int(self.width()/2-text_width/2), 45, self.text())
 # PyQt
 
 # PySide
@@ -82,5 +82,5 @@ class QtBoxStyleProgressBar8(QProgressBar):
 #         painter.setFont(font)
 #         font_metrics = QFontMetricsF(font)
 #         text_width = font_metrics.width(self.text())
-#         painter.drawText(self.width()/2-text_width/2, 45, self.text())
+#         painter.drawText(int(self.width()/2-text_width/2), 45, self.text())
 # PySide

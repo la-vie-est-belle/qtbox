@@ -370,6 +370,15 @@ class DisplayWidget(QWidget):
         with open(RES_PATH / f"qss/{theme}/editor.qss", encoding="utf-8") as f:
             self.setStyleSheet(f.read())
 
+        icon_path = str(RES_PATH / "images/up_down.png").replace("\\", "/")
+        self.setStyleSheet("""
+        QComboBox#widgetComboBox::down-arrow {
+            width: 13px;
+            height: 13px;
+            image: url(%s);
+        }
+        """ % icon_path)
+
     def set_widget(self):
         self.widget_combo_box.addItems(self.widget_list)
 

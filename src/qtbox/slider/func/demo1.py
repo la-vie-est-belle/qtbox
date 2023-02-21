@@ -47,7 +47,7 @@ class QtBoxFuncSlider1(QSlider):
         painter.setPen(Qt.NoPen)
         painter.drawRoundedRect(x, 0, text_width, text_height*1.3, 3, 3)
         painter.setPen(Qt.SolidLine)
-        painter.drawText(x, text_height, str(self.value()))
+        painter.drawText(int(x), int(text_height), str(self.value()))
 # PyQt
 
 # PySide
@@ -96,5 +96,5 @@ class QtBoxFuncSlider1(QSlider):
 #         painter.setPen(Qt.NoPen)
 #         painter.drawRoundedRect(x, 0, text_width, text_height, 2, 2)
 #         painter.setPen(Qt.SolidLine)
-#         painter.drawText(x, text_height, str(self.value()))
+#         painter.drawText(int(x), int(text_height), str(self.value()))
 # PySide

@@ -41,6 +41,7 @@ QWidget#displayWidget {
 QComboBox#widgetComboBox {
     background-color: #3b3f42;
     border: 1px solid darkgray;
+    border-radius: 5px;
     font-weight: bold;
     color: white;
     padding-left: 15px;
@@ -51,6 +52,7 @@ QComboBox#widgetComboBox {
 
 QComboBox#widgetComboBox::drop-down {
     width: 13px;
+    border: none;
 }
 
 QComboBox#widgetComboBox QAbstractItemView {

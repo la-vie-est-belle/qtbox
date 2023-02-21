@@ -49,7 +49,7 @@ class QtBoxStyleButton10(QPushButton):
         painter.setFont(font)
         font_metrics = QFontMetricsF(font)
         text_width = font_metrics.width("BTN")
-        painter.drawText(self.rect().width()/2-text_width/2, self.rect().height()/2+5, "BTN")
+        painter.drawText(int(self.rect().width()/2-text_width/2), int(self.rect().height()/2+5), "BTN")
 
     def mousePressEvent(self, event):
         if event.button() != Qt.LeftButton or not self.btn_rect.contains(event.pos()):
@@ -61,7 +61,6 @@ class QtBoxStyleButton10(QPushButton):
     def mouseReleaseEvent(self, event):
         self.btn_state = "off"
         self.update()
-
 # PyQt
 
 # PySide
@@ -112,7 +111,7 @@ class QtBoxStyleButton10(QPushButton):
 #         painter.setFont(font)
 #         font_metrics = QFontMetricsF(font)
 #         text_width = font_metrics.width("BTN")
-#         painter.drawText(self.rect().width()/2-text_width/2, self.rect().height()/2+5, "BTN")
+#         painter.drawText(int(self.rect().width()/2-text_width/2), int(self.rect().height()/2+5), "BTN")
 
 #     def mousePressEvent(self, event):
 #         if event.button() != Qt.LeftButton or not self.btn_rect.contains(event.pos()):

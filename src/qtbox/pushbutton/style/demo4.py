@@ -58,7 +58,7 @@ class QtBoxStyleButton4(QPushButton):
         painter.setFont(font)
         font_metrics = QFontMetricsF(font)
         text_width = font_metrics.width("BTN")
-        painter.drawText(self.rect().width()/2-text_width/2, self.rect().height()/2+20, "BTN")
+        painter.drawText(int(self.rect().width()/2-text_width/2), int(self.rect().height()/2+20), "BTN")
 
     def mousePressEvent(self, event):
         self.btn_state = "press"
@@ -134,7 +134,7 @@ class QtBoxStyleButton4(QPushButton):
 #         painter.setFont(font)
 #         font_metrics = QFontMetricsF(font)
 #         text_width = font_metrics.width("BTN")
-#         painter.drawText(self.rect().width() / 2 - text_width / 2, self.rect().height() / 2 + 20, "BTN")
+#         painter.drawText(int(self.rect().width()/2-text_width/2), int(self.rect().height()/2+20), "BTN")
 
 #     def mousePressEvent(self, event):
 #         self.btn_state = "press"

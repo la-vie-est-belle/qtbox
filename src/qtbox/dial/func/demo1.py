@@ -25,7 +25,7 @@ class QtBoxFuncDial1(QDial):
         painter.setFont(font)
         font_metrics = QFontMetricsF(font)
         text_width = font_metrics.width(str(self.value()))
-        painter.drawText(self.width()/2-text_width/2, self.height()/2, str(self.value()))
+        painter.drawText(int(self.width()/2-text_width/2), int(self.height()/2), str(self.value()))
 # PyQt
 
 # PySide
@@ -52,5 +52,5 @@ class QtBoxFuncDial1(QDial):
 #         painter.setFont(font)
 #         font_metrics = QFontMetricsF(font)
 #         text_width = font_metrics.width(str(self.value()))
-#         painter.drawText(self.width()/2-text_width/2, self.height()/2, str(self.value()))
+#         painter.drawText(int(self.width()/2-text_width/2), int(self.height()/2), str(self.value()))
 # PySide

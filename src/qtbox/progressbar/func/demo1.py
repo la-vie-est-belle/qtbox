@@ -1,5 +1,4 @@
 # PyQt
-from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QProgressBar
 from qtbox.utils.menu import createWidgetMenuBase
 from pathlib import Path
