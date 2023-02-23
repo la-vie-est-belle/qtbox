@@ -1,9 +1,15 @@
+v1.1.2
+1. Added 1 style demo for QListWidget.
+2. Added 1 style demo for QPushButton.
+3. Added new version release notice.
+4. Fixed known issues of QSS Editor.
+
+
 v1.1.1
-1. Added QSS Editor.
-2. Added 1 func demo for QLabel.
-3. Added 1 style demo for QPushButton.
-4. Added 1 style demo and 1 func demo for QListWidget.
-5. Fixed crash problem when showing QDial, QProgress and QPushButton style demos.
+1. Added 1 func demo for QLabel.
+2. Added 1 style demo for QPushButton.
+3. Added 1 style demo and 1 func demo for QListWidget.
+4. Fixed crash problem when showing QDial, QProgress and QPushButton style demos.
 
 
 v1.1.0

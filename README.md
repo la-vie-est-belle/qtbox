@@ -1,10 +1,10 @@
-# Qt Box
+# Qt Box ([中文](https://zhuanlan.zhihu.com/p/606612591))
 <p dir="auto">
     <a href="javascript:;">
         <img src="https://img.shields.io/badge/Qt Box-Open Source-green.svg" />
     </a>
     <a href="javascript:;">
-        <img src="https://img.shields.io/badge/Version-1.1.1-blue.svg" />
+        <img src="https://static.pepy.tech/personalized-badge/qtbox?period=total&units=international_system&left_color=grey&right_color=blue&left_text=Downloads" />
     </a>
     <a href="javascript:;">
         <img src="https://img.shields.io/badge/For-PyQt and PySide-dark.svg" />

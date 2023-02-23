@@ -8,6 +8,7 @@ from PyQt5.QtGui import *
 from PyQt5.QtCore import *
 from PyQt5.QtWidgets import *
 
+from qtbox.utils.check import check_update
 from qtbox.utils.editor import QSSEditor
 from qtbox.utils.viewer import CodeViewer
 from qtbox.utils.message import MessageBox
@@ -38,14 +39,13 @@ from qtbox.spinbox import style as style_spinbox
 from qtbox.widget import func as func_widget
 from qtbox.widget import style as style_widget
 
-VERSION = "1.1.1"
+VERSION = "1.1.2"
 
 UPDATES = """
-1. Added QSS Editor.\n
-2. Added 1 func demo for QLabel.\n
-3. Added 1 style demo for QPushButton.\n
-4. Added 1 style demo and 1 func demo for QListWidget.\n
-5. Fixed crash problem when showing QDial, QProgress and QPushButton style demos.
+1. Added 1 style demo for QListWidget.\n
+2. Added 1 style demo for QPushButton.\n
+3. Added new version release notice. \n
+4. Fixed known issues of QSS Editor. \n
 """
 
 RES_PATH = Path(__file__).parent / "res"
@@ -119,7 +119,7 @@ class WindowBody(QWidget):
 
         self.listwidget_dict = {
             "func": [func_listwidget.demo1.QtBoxFuncListWidget1],
-            "style": [style_listwidget.demo1.QtBoxStyleListWidget1]
+            "style": [style_listwidget.demo1.QtBoxStyleListWidget1, style_listwidget.demo2.QtBoxStyleListWidget2]
         }
 
         self.progressbar_dict = {
@@ -134,7 +134,7 @@ class WindowBody(QWidget):
             "style": [style_pushbutton.demo1.QtBoxStyleButton1, style_pushbutton.demo2.QtBoxStyleButton2, style_pushbutton.demo3.QtBoxStyleButton3,
                       style_pushbutton.demo4.QtBoxStyleButton4, style_pushbutton.demo5.QtBoxStyleButton5, style_pushbutton.demo6.QtBoxStyleButton6,
                       style_pushbutton.demo7.QtBoxStyleButton7, style_pushbutton.demo8.QtBoxStyleButton8, style_pushbutton.demo9.QtBoxStyleButton9,
-                      style_pushbutton.demo10.QtBoxStyleButton10, style_pushbutton.demo11.QtBoxStyleButton11]
+                      style_pushbutton.demo10.QtBoxStyleButton10, style_pushbutton.demo11.QtBoxStyleButton11, style_pushbutton.demo12.QtBoxStyleButton12]
         }
 
         self.slider_dict = {
@@ -535,6 +535,7 @@ class Window(QWidget):
 
 
 def main():
+    check_update()
     app = QApplication([])
     window = Window()
     window.show()

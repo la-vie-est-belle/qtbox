@@ -1,8 +1,9 @@
 import sys
 import json
 from pathlib import Path
-from qtbox.utils.title import TitleWidget as QSSEditorTitle
+from qtbox.utils.check import check_update
 from qtbox.utils.output import suppress_stdout_stderr
+from qtbox.utils.title import TitleWidget as QSSEditorTitle
 
 from PyQt5.QtGui import *
 from PyQt5.QtCore import *
@@ -249,6 +250,34 @@ class CustomTextEdit(QPlainTextEdit):
         else:
             self.undo_stack_list.append((self.document().toHtml(), self.textCursor().position()))
 
+    def is_text_cursor_in_brace_block(self):
+        """Check if the text cursor is between { and }"""
+        left_brace_pos = None
+        right_brace_pos = None
+
+        text_cursor = self.textCursor()
+        for i in range(text_cursor.position()):
+            text_cursor.movePosition(QTextCursor.Left, QTextCursor.KeepAnchor)
+            if "{" in text_cursor.selectedText():
+                left_brace_pos = i
+            elif "}" in text_cursor.selectedText():
+                right_brace_pos = i
+
+            if left_brace_pos is not None and right_brace_pos is not None:
+                break
+
+        if left_brace_pos is None and right_brace_pos is None:
+            return False
+        elif left_brace_pos is not None and right_brace_pos is None:
+            return True
+        elif left_brace_pos is None and right_brace_pos is not None:
+            return False
+
+        if left_brace_pos < right_brace_pos:
+            return True
+        else:
+            return False
+
     def contextMenuEvent(self, event):
         return
 
@@ -268,11 +297,12 @@ class CustomTextEdit(QPlainTextEdit):
                 self.undo()
             elif event.key() == Qt.Key_V:
                 self.highlight_text()
-
         elif event.modifiers() == Qt.ControlModifier | Qt.ShiftModifier:
             if event.key() == Qt.Key_Z:
                 self.redo()
         else:
+            if event.key() == Qt.Key_Enter or event.key() == Qt.Key_Return and self.is_text_cursor_in_brace_block():
+                self.textCursor().insertText("\t")
             self.add_undo_command()
 
         word_under_cursor = self.get_word_under_cursor()
@@ -280,6 +310,23 @@ class CustomTextEdit(QPlainTextEdit):
             self.completer.popup().setVisible(False)
             return
 
+        if word_under_cursor == "{" and event.key() != Qt.Key_Backspace:
+            self.highlight_text()
+            return
+
+        if word_under_cursor == "}" and event.key() != Qt.Key_Backspace:
+            text_cursor = self.textCursor()
+            for _ in range(text_cursor.positionInBlock()):
+                text_cursor.movePosition(QTextCursor.Left, QTextCursor.KeepAnchor)
+            if text_cursor.selectedText().strip() == "}":
+                text_cursor.removeSelectedText()
+                text_cursor.insertText("}")
+            self.highlight_text()
+            return
+
+        self.complete_completer(word_under_cursor)
+
+    def complete_completer(self, word_under_cursor):
         completer_prefix = word_under_cursor
         self.completer.setCompletionPrefix(completer_prefix)
 
@@ -605,6 +652,7 @@ class QSSEditor(QWidget):
 
 
 def main():
+    check_update()
     app = QApplication([])
     qss_editor = QSSEditor()
     qss_editor.show()
