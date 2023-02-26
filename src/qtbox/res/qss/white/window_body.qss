@@ -21,7 +21,7 @@ QPushButton#listBtn:checked {
     color: white;
 }
 
-QPushButton#editorBtn, QPushButton#docBtn, QPushButton#aboutBtn, QPushButton#switchBtn {
+QPushButton#editorBtn, QPushButton#sponsorBtn, QPushButton#docBtn, QPushButton#aboutBtn, QPushButton#switchBtn {
     border: none;
 }
 

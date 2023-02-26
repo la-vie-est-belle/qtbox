@@ -1,5 +1,5 @@
 # PyQt
-from PyQt5.QtCore import Qt
+from PyQt5.QtCore import Qt, QRectF
 from PyQt5.QtWidgets import QPushButton
 from PyQt5.QtGui import QPainter, QPen, QColor
 from qtbox.utils.menu import createWidgetMenuBase
@@ -21,15 +21,21 @@ class QtBoxStyleButton8(QPushButton):
 
         if self.btn_state == "on":
             painter.setBrush(QColor("#60ca5b"))
-            painter.drawRoundedRect(0, 0, self.width(), self.height(), self.height()/2, self.height()/2)
+            rect = QRectF(0, 0, self.width(), self.height())
+            painter.drawRoundedRect(rect, self.height()/2, self.height()/2)
+
             painter.setBrush(Qt.white)
-            painter.drawRoundedRect(self.width()/2-5, 5, self.width()/2, self.height()-5*2, (self.height()-5*2)/2, (self.height()-5*2)/2)
+            rect = QRectF(self.width()/2-5, 5, self.width()/2, self.height()-5*2)
+            painter.drawRoundedRect(rect, (self.height()-5*2)/2, (self.height()-5*2)/2)
 
         else:
             painter.setBrush(QColor("#dcdcdc"))
-            painter.drawRoundedRect(0, 0, self.width(), self.height(), self.height()/2, self.height()/2)
+            rect = QRectF(0, 0, self.width(), self.height())
+            painter.drawRoundedRect(rect, self.height()/2, self.height()/2)
+
             painter.setBrush(Qt.white)
-            painter.drawRoundedRect(5, 5, self.width()/2, self.height()-5*2, (self.height()-5*2)/2, (self.height()-5*2)/2)
+            rect = QRectF(5, 5, self.width()/2, self.height()-5*2)
+            painter.drawRoundedRect(rect, (self.height()-5*2)/2, (self.height()-5*2)/2)
 
     def mousePressEvent(self, event):
         if event.button() == Qt.LeftButton:
@@ -40,7 +46,7 @@ class QtBoxStyleButton8(QPushButton):
 # PyQt
 
 # PySide
-# from PySide2.QtCore import Qt
+# from PySide2.QtCore import Qt, QRectF
 # from PySide2.QtWidgets import QPushButton
 # from PySide2.QtGui import QPainter, QPen, QColor
 
@@ -59,15 +65,21 @@ class QtBoxStyleButton8(QPushButton):
 
 #         if self.btn_state == "on":
 #             painter.setBrush(QColor("#60ca5b"))
-#             painter.drawRoundedRect(0, 0, self.width(), self.height(), self.height()/2, self.height()/2)
+#             rect = QRectF(0, 0, self.width(), self.height())
+#             painter.drawRoundedRect(rect, self.height()/2, self.height()/2)
+
 #             painter.setBrush(Qt.white)
-#             painter.drawRoundedRect(self.width()/2-5, 5, self.width()/2, self.height()-5*2, (self.height()-5*2)/2, (self.height()-5*2)/2)
+#             rect = QRectF(self.width()/2-5, 5, self.width()/2, self.height()-5*2)
+#             painter.drawRoundedRect(rect, (self.height()-5*2)/2, (self.height()-5*2)/2)
 
 #         else:
 #             painter.setBrush(QColor("#dcdcdc"))
-#             painter.drawRoundedRect(0, 0, self.width(), self.height(), self.height()/2, self.height()/2)
+#             rect = QRectF(0, 0, self.width(), self.height())
+#             painter.drawRoundedRect(rect, self.height()/2, self.height()/2)
+
 #             painter.setBrush(Qt.white)
-#             painter.drawRoundedRect(5, 5, self.width()/2, self.height()-5*2, (self.height()-5*2)/2, (self.height()-5*2)/2)
+#             rect = QRectF(5, 5, self.width()/2, self.height()-5*2)
+#             painter.drawRoundedRect(rect, (self.height()-5*2)/2, (self.height()-5*2)/2)
 
 #     def mousePressEvent(self, event):
 #         if event.button() == Qt.LeftButton:

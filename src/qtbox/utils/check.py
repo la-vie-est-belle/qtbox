@@ -11,7 +11,7 @@ def compare_version():
     except Exception as e:
         return
 
-    current_version = "v1.1.2"
+    current_version = "v1.1.3"
     if remote_version != current_version:
         print(f"Qt Box {remote_version} is available. Upgrade it with command `pip install --upgrade qtbox`")
 

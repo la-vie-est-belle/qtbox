@@ -39,13 +39,13 @@ from qtbox.spinbox import style as style_spinbox
 from qtbox.widget import func as func_widget
 from qtbox.widget import style as style_widget
 
-VERSION = "1.1.2"
+VERSION = "1.1.3"
 
 UPDATES = """
-1. Added 1 style demo for QListWidget.\n
-2. Added 1 style demo for QPushButton.\n
-3. Added new version release notice. \n
-4. Fixed known issues of QSS Editor. \n
+1. Added 1 func demo for QLineEdit.\n
+2. Added 1 func demo for QWidget.\n
+3. Added a sponsor part. \n
+4. Fixed a crash problem.
 """
 
 RES_PATH = Path(__file__).parent / "res"
@@ -68,13 +68,15 @@ class WindowBody(QWidget):
         self.tab_widget = QTabWidget()
 
         self.editor_btn = QPushButton()
+        self.sponsor_btn = QPushButton()
         self.doc_btn = QPushButton()
         self.about_btn = QPushButton()
         self.switch_btn = QPushButton()
 
         self.qss_editor = QSSEditor()
         self.code_viewer = CodeViewer()
-        self.message_box = MessageBox()
+        self.updates_message_box = MessageBox()
+        self.sponsor_message_box = MessageBox()
 
         self.grid_layout_children = []
         self.grid_layout = QGridLayout()
@@ -111,7 +113,7 @@ class WindowBody(QWidget):
 
         self.lineedit_dict = {
             "func": [func_lineedit.demo1.QtBoxFuncLineEdit1, func_lineedit.demo2.QtBoxFuncLineEdit2, func_lineedit.demo3.QtBoxFuncLineEdit3,
-                     func_lineedit.demo4.QtBoxFuncLineEdit4],
+                     func_lineedit.demo4.QtBoxFuncLineEdit4, func_lineedit.demo5.QtBoxFuncLineEdit5],
             "style": [style_lineedit.demo1.QtBoxStyleLineEdit1, style_lineedit.demo2.QtBoxStyleLineEdit2, style_lineedit.demo3.QtBoxStyleLineEdit3,
                       style_lineedit.demo4.QtBoxStyleLineEdit4, style_lineedit.demo5.QtBoxStyleLineEdit5, style_lineedit.demo6.QtBoxStyleLineEdit6,
                       style_lineedit.demo7.QtBoxStyleLineEdit7]
@@ -149,7 +151,7 @@ class WindowBody(QWidget):
         }
 
         self.widget_dict = {
-            "func": [func_widget.demo1.QtBoxFuncWidget1],
+            "func": [func_widget.demo1.QtBoxFuncWidget1, func_widget.demo2.QtBoxFuncWidget2],
             "style": [style_widget.demo1.QtBoxStyleWidget1, style_widget.demo2.QtBoxStyleWidget2]
         }
 
@@ -174,6 +176,7 @@ class WindowBody(QWidget):
             btn.setObjectName("listBtn")
 
         self.editor_btn.setObjectName("editorBtn")
+        self.sponsor_btn.setObjectName("sponsorBtn")
         self.doc_btn.setObjectName("docBtn")
         self.about_btn.setObjectName("aboutBtn")
         self.switch_btn.setObjectName("switchBtn")
@@ -205,34 +208,50 @@ class WindowBody(QWidget):
         self.tab_widget.addTab(self.func_tab, "Function")
 
         self.editor_btn.setFixedWidth(30)
+        self.sponsor_btn.setFixedWidth(30)
         self.doc_btn.setFixedWidth(30)
         self.about_btn.setFixedWidth(30)
         self.switch_btn.setFixedWidth(30)
         self.editor_btn.setToolTip("Open QSS editor")
+        self.sponsor_btn.setToolTip("Sponsor")
         self.doc_btn.setToolTip("Open documentation")
         self.about_btn.setToolTip("Show updates")
         self.switch_btn.setToolTip("Switch theme")
         self.editor_btn.setCursor(Qt.PointingHandCursor)
+        self.sponsor_btn.setCursor(Qt.PointingHandCursor)
         self.doc_btn.setCursor(Qt.PointingHandCursor)
         self.about_btn.setCursor(Qt.PointingHandCursor)
         self.switch_btn.setCursor(Qt.PointingHandCursor)
         self.editor_btn.setIcon(QIcon(str(RES_PATH / "images/editor.png")))
+        self.sponsor_btn.setIcon(QIcon(str(RES_PATH / "images/sponsor.png")))
         self.doc_btn.setIcon(QIcon(str(RES_PATH / "images/doc.png")))
         self.about_btn.setIcon(QIcon(str(RES_PATH / "images/about.png")))
         self.switch_btn.setIcon(QIcon(str(RES_PATH / "images/switch.png")))
 
         self.code_viewer.hide()
+
         desktop = QApplication.desktop()
-        self.message_box.move(desktop.width()//2-self.message_box.width()//2, desktop.height()//2-self.message_box.height()//2)
-        self.message_box.set_title(f"Qt Box Updates v{VERSION}")
-        self.message_box.set_content(UPDATES)
-        self.message_box.hide()
+        self.updates_message_box.move(desktop.width()//2-self.updates_message_box.width()//2, desktop.height()//2-self.updates_message_box.height()//2)
+        self.updates_message_box.set_title(f"Qt Box Updates v{VERSION}")
+        self.updates_message_box.set_plain_text(UPDATES)
+        self.updates_message_box.content_browser.setLineWrapMode(QTextEdit.NoWrap)
+        self.updates_message_box.hide()
+
+        self.sponsor_message_box.setFixedSize(320, 205)
+        self.sponsor_message_box.content_browser.setMinimumHeight(95)
+        self.sponsor_message_box.move(desktop.width()//2-self.sponsor_message_box.width()//2, desktop.height()//2-self.sponsor_message_box.height()//2)
+        self.sponsor_message_box.set_title("Customize")
+        self.sponsor_message_box.set_html("Contact <a href='mailto:louasure@126.com' style='text-decoration:none'>louasure@126.com</a> to customize a widget. If you have any problems with PyQt or PySide, you may contact me, too. I will be very happy to provide solutions. <a href='https://github.com/la-vie-est-belle/qtbox' style='text-decoration:none'>Sponsors'</a> needs will be treated with top priority. (๑•̀ㅂ•́)و✧")
+        self.sponsor_message_box.content_browser.setOpenExternalLinks(True)
+        self.sponsor_message_box.content_browser.setAlignment(Qt.AlignJustify)
+        self.sponsor_message_box.hide()
 
     def set_signal(self):
         for btn in self.btn_list:
             btn.clicked.connect(self.change_widget)
 
         self.editor_btn.clicked.connect(self.open_editor)
+        self.sponsor_btn.clicked.connect(self.show_sponsor_message)
         self.doc_btn.clicked.connect(self.open_doc)
         self.about_btn.clicked.connect(self.show_updates)
         self.switch_btn.clicked.connect(self.switch_theme)
@@ -252,10 +271,11 @@ class WindowBody(QWidget):
             self.btn_list_widget.setItemWidget(item, btn)
 
         h_layout1.addWidget(self.editor_btn)
+        h_layout1.addWidget(self.sponsor_btn)
         h_layout1.addWidget(self.doc_btn)
         h_layout1.addWidget(self.about_btn)
         h_layout1.addWidget(self.switch_btn)
-        h_layout1.setSpacing(50)
+        h_layout1.setSpacing(30)
 
         v_layout1.addLayout(h_layout1)
         v_layout1.addWidget(self.btn_list_widget)
@@ -407,13 +427,17 @@ class WindowBody(QWidget):
     def open_editor(self):
         self.qss_editor.show()
 
+    def show_sponsor_message(self):
+        self.sponsor_message_box.show()
+        self.sponsor_message_box.raise_()
+
     @staticmethod
     def open_doc():
         webbrowser.open("https://github.com/la-vie-est-belle/qtbox")
 
     def show_updates(self):
-        self.message_box.show()
-        self.message_box.raise_()
+        self.updates_message_box.show()
+        self.updates_message_box.raise_()
 
     def switch_theme(self):
         self.switch_theme_signal.emit()
@@ -422,7 +446,8 @@ class WindowBody(QWidget):
         self.set_style_sheet()
         self.qss_editor.reload_style_sheet()
         self.code_viewer.reload_style_sheet()
-        self.message_box.reload_style_sheet()
+        self.updates_message_box.reload_style_sheet()
+        self.sponsor_message_box.reload_style_sheet()
 
         for widget in self.grid_layout_children:
             widget.context_menu.reload_style_sheet()

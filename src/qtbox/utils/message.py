@@ -33,7 +33,6 @@ class MessageBox(QWidget):
     def set_widget(self):
         self.title_label.setAlignment(Qt.AlignCenter)
         self.title_label.setFixedWidth(220)
-        self.content_browser.setLineWrapMode(QTextEdit.NoWrap)
         self.content_browser.setMinimumHeight(300)
         self.confirm_btn.setText("OK")
         self.confirm_btn.setFixedSize(100, 30)
@@ -52,7 +51,9 @@ class MessageBox(QWidget):
         title_h_layout.addWidget(self.title_label)
         title_h_layout.setAlignment(Qt.AlignCenter)
         all_v_layout.addLayout(title_h_layout)
+        all_v_layout.addSpacing(5)
         all_v_layout.addWidget(self.content_browser)
+        all_v_layout.addSpacing(5)
         btn_h_layout.addWidget(self.confirm_btn)
         btn_h_layout.setAlignment(Qt.AlignCenter)
         all_v_layout.addLayout(btn_h_layout)
@@ -112,8 +113,11 @@ class MessageBox(QWidget):
     def set_title(self, s):
         self.title_label.setText(s)
 
-    def set_content(self, s):
+    def set_plain_text(self, s):
         self.content_browser.setPlainText(s)
+
+    def set_html(self, s):
+        self.content_browser.setHtml(s)
 
     def reload_style_sheet(self):
         self.set_style_sheet()

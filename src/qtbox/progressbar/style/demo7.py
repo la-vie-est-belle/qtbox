@@ -26,7 +26,7 @@ class QtBoxStyleProgressBar7(QProgressBar):
         arc_pen.setWidth(18)
         painter.setPen(arc_pen)
         percent = self.value() / self.maximum() if self.maximum() != 0 else 0
-        painter.drawArc(arc_rect, 90*16, percent*360*16)
+        painter.drawArc(arc_rect, 90*16, int(percent*360*16))
 
         font = QFont()
         font.setPixelSize(15)
@@ -61,7 +61,7 @@ class QtBoxStyleProgressBar7(QProgressBar):
 #         arc_pen.setWidth(18)
 #         painter.setPen(arc_pen)
 #         percent = self.value() / self.maximum() if self.maximum() != 0 else 0
-#         painter.drawArc(arc_rect, 90*16, percent*360*16)
+#         painter.drawArc(arc_rect, 90*16, int(percent*360*16))
 
 #         font = QFont()
 #         font.setPixelSize(15)
