@@ -16,21 +16,21 @@ QAbstractItemView#completer {
     padding-top: 2px;
 }
 
-QScrollBar:vertical {
+QScrollBar#customEditVScrollBar:vertical {
     width: 2px;
     background-color: white;
 }
 
-QScrollBar::handle:vertical {
+QScrollBar#customEditVScrollBar::handle:vertical {
     background-color: #b2bdaf;
 }
 
-QScrollBar:horizontal {
+QScrollBar#customEditHScrollBar:horizontal {
     height: 2px;
     background-color: white;
 }
 
-QScrollBar::handle:horizontal {
+QScrollBar#customEditHScrollBar::handle:horizontal {
     background-color: #b2bdaf;
 }
 

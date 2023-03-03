@@ -36,16 +36,18 @@ from qtbox.slider import func as func_slider
 from qtbox.slider import style as style_slider
 from qtbox.spinbox import func as func_spinbox
 from qtbox.spinbox import style as style_spinbox
+from qtbox.tablewidget import func as func_tablewidget
+from qtbox.tablewidget import style as style_tablewidget
 from qtbox.widget import func as func_widget
 from qtbox.widget import style as style_widget
 
-VERSION = "1.1.3"
+VERSION = "1.1.4"
 
 UPDATES = """
-1. Added 1 func demo for QLineEdit.\n
-2. Added 1 func demo for QWidget.\n
-3. Added a sponsor part. \n
-4. Fixed a crash problem.
+1. Added 1 style demo and 2 func demos for QTableWidget.\n
+2. Enriched widget choices in QSS Editor. \n
+3. Optimized suppress_stdout_stderr() in output.py. \n
+4. Eliminate the framework's QSS effect (e.g. QScrollBar's QSS effect) on demos.
 """
 
 RES_PATH = Path(__file__).parent / "res"
@@ -60,7 +62,7 @@ class WindowBody(QWidget):
         self.btn_list = [QPushButton(txt) for txt in ["QCheckBox", "QComboBox", "QDial",
                                                       "QLabel", "QLCDNumber", "QLineEdit",
                                                       "QListWidget", "QProgressBar", "QPushButton",
-                                                      "QSlider", "QSpinBox", "QWidget"]]
+                                                      "QSlider", "QSpinBox", "QTableWidget", "QWidget"]]
         self.func_widget = QWidget()
         self.style_widget = QWidget()
         self.func_tab = QScrollArea()
@@ -150,6 +152,11 @@ class WindowBody(QWidget):
             "style": [style_spinbox.demo1.QtBoxStyleSpinBox1]
         }
 
+        self.tablewidget_dict = {
+            "func": [func_tablewidget.demo1.QtBoxFuncTableWidget1, func_tablewidget.demo2.QtBoxFuncTableWidget2],
+            "style": [style_tablewidget.demo1.QtBoxStyleTableWidget1]
+        }
+
         self.widget_dict = {
             "func": [func_widget.demo1.QtBoxFuncWidget1, func_widget.demo2.QtBoxFuncWidget2],
             "style": [style_widget.demo1.QtBoxStyleWidget1, style_widget.demo2.QtBoxStyleWidget2]
@@ -171,6 +178,7 @@ class WindowBody(QWidget):
     def set_object_name(self):
         self.setObjectName("windowBody")
         self.btn_list_widget.setObjectName("btnList")
+        self.btn_list_widget.verticalScrollBar().setObjectName("btnList")
 
         for btn in self.btn_list:
             btn.setObjectName("listBtn")
@@ -182,8 +190,12 @@ class WindowBody(QWidget):
         self.switch_btn.setObjectName("switchBtn")
 
         self.tab_widget.setObjectName("tabWidget")
-        self.func_tab.setObjectName("funcScroll")
-        self.style_tab.setObjectName("styleScroll")
+        self.func_tab.setObjectName("funcScrollArea")
+        self.style_tab.setObjectName("styleScrollArea")
+        self.func_tab.verticalScrollBar().setObjectName("funcScrollVBar")
+        self.func_tab.horizontalScrollBar().setObjectName("funcScrollHBar")
+        self.style_tab.verticalScrollBar().setObjectName("styleScrollVBar")
+        self.style_tab.horizontalScrollBar().setObjectName("styleScrollHBar")
         self.func_widget.setObjectName("funcWidget")
         self.style_widget.setObjectName("styleWidget")
 
@@ -353,6 +365,9 @@ class WindowBody(QWidget):
 
         elif btn_txt == "QSpinBox":
             widget_list = self.spinbox_dict[key]
+
+        elif btn_txt == "QTableWidget":
+            widget_list = self.tablewidget_dict[key]
 
         elif btn_txt == "QWidget":
             widget_list = self.widget_dict[key]

@@ -1,31 +1,37 @@
 import os
+import sys
 
 
 class suppress_stdout_stderr(object):
-    '''
-    A context manager for doing a "deep suppression" of stdout and stderr in
-    Python, i.e. will suppress all print, even if the print originates in a
-    compiled C/Fortran sub-function.
-       This will not suppress raised exceptions, since exceptions are printed
-    to stderr just before a script exits, and after the context manager has
-    exited (at least, I think that is why it lets exceptions through).
-
-    '''
-    def __init__(self):
-        # Open a pair of null files
-        self.null_fds = [os.open(os.devnull, os.O_RDWR) for x in range(2)]
-        # Save the actual stdout (1) and stderr (2) file descriptors.
-        self.save_fds = (os.dup(1), os.dup(2))
-
     def __enter__(self):
-        # Assign the null pointers to stdout and stderr.
-        os.dup2(self.null_fds[0], 1)
-        os.dup2(self.null_fds[1], 2)
+        self.outnull_file = open(os.devnull, 'w')
+        self.errnull_file = open(os.devnull, 'w')
+
+        self.old_stdout_fileno_undup = sys.stdout.fileno()
+        self.old_stderr_fileno_undup = sys.stderr.fileno()
+
+        self.old_stdout_fileno = os.dup(sys.stdout.fileno())
+        self.old_stderr_fileno = os.dup(sys.stderr.fileno())
+
+        self.old_stdout = sys.stdout
+        self.old_stderr = sys.stderr
+
+        os.dup2(self.outnull_file.fileno(), self.old_stdout_fileno_undup)
+        os.dup2(self.errnull_file.fileno(), self.old_stderr_fileno_undup)
+
+        sys.stdout = self.outnull_file
+        sys.stderr = self.errnull_file
+        return self
 
     def __exit__(self, *_):
-        # Re-assign the real stdout/stderr back to (1) and (2)
-        os.dup2(self.save_fds[0], 1)
-        os.dup2(self.save_fds[1], 2)
-        # Close the null files
-        os.close(self.null_fds[0])
-        os.close(self.null_fds[1])
+        sys.stdout = self.old_stdout
+        sys.stderr = self.old_stderr
+
+        os.dup2(self.old_stdout_fileno, self.old_stdout_fileno_undup)
+        os.dup2(self.old_stderr_fileno, self.old_stderr_fileno_undup)
+
+        os.close(self.old_stdout_fileno)
+        os.close(self.old_stderr_fileno)
+
+        self.outnull_file.close()
+        self.errnull_file.close()

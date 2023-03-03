@@ -65,6 +65,8 @@ class CustomTextEdit(QPlainTextEdit):
 
     def set_object_name(self):
         self.setObjectName("customEdit")
+        self.verticalScrollBar().setObjectName("customEditVScrollBar")
+        self.horizontalScrollBar().setObjectName("customEditHScrollBar")
         self.copy_btn.setObjectName("copyBtn")
         self.completer.popup().setObjectName("completer")
 
@@ -384,8 +386,9 @@ class CustomTextEdit(QPlainTextEdit):
 class DisplayWidget(QWidget):
     def __init__(self):
         super(DisplayWidget, self).__init__()
-        self.widget_list = ["QCheckBox", "QComboBox", "QDial", "QLabel", "QLCDNumber", "QLineEdit",
-                            "QProgressBar", "QPushButton", "QSlider", "QSpinBox", "QWidget"]
+        self.widget_list = ["QCheckBox", "QComboBox", "QDial", "QLabel", "QLCDNumber", "QLineEdit", "QListWidget",
+                            "QProgressBar", "QPushButton", "QRadioButton", "QSlider", "QSpinBox", "QTableWidget",
+                            "QWidget"]
         self.widget_combo_box = QComboBox()
         self.current_widget = None
         self.qss = None
@@ -472,6 +475,14 @@ class DisplayWidget(QWidget):
             self.current_widget = QLineEdit(self)
             self.current_widget.setPlaceholderText("Qt Box")
 
+        elif text == "QListWidget":
+            self.current_widget = QListWidget(self)
+            self.current_widget.setFixedSize(150, 200)
+            for i in range(5):
+                item = QListWidgetItem()
+                item.setText(str(i+1))
+                self.current_widget.addItem(item)
+
         elif text == "QProgressBar":
             self.current_widget = QProgressBar(self)
             self.current_widget.setMinimum(0)
@@ -482,6 +493,10 @@ class DisplayWidget(QWidget):
             self.current_widget = QPushButton(self)
             self.current_widget.setText("BUTTON")
 
+        elif text == "QRadioButton":
+            self.current_widget = QRadioButton(self)
+            self.current_widget.setText("Qt Box")
+
         elif text == "QSlider":
             self.current_widget = QSlider(self)
             self.current_widget.setOrientation(Qt.Horizontal)
@@ -490,6 +505,12 @@ class DisplayWidget(QWidget):
 
         elif text == "QSpinBox":
             self.current_widget = QSpinBox(self)
+
+        elif text == "QTableWidget":
+            self.current_widget = QTableWidget(self)
+            self.current_widget.setFixedSize(200, 150)
+            self.current_widget.setColumnCount(3)
+            self.current_widget.setRowCount(5)
 
         elif text == "QWidget":
             self.current_widget = QWidget(self)

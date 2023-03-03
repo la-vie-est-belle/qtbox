@@ -34,7 +34,7 @@ QListView#btnList::item:selected {
     border: none;
 }
 
-QScrollArea#funcScroll, QScrollArea#styleScroll {
+QScrollArea#funcScrollArea, QScrollArea#styleScrollArea {
     background-color: #2b2b2b;
     border: 1px solid gray;
 }
@@ -76,20 +76,20 @@ QTabBar::tab:selected {
     color: black;
 }
 
-QScrollBar:vertical {
+QScrollBar#btnList:vertical, QScrollBar#funcScrollVBar:vertical, QScrollBar#styleScrollVBar:vertical {
     width: 2px;
     background-color: #2b2b2b;
 }
 
-QScrollBar::handle:vertical {
+QScrollBar#btnList::handle:vertical, QScrollBar#funcScrollVBar::handle:vertical, QScrollBar#styleScrollVBar::handle:vertical {
     background-color: #b2bdaf;
 }
 
-QScrollBar:horizontal {
+QScrollBar#btnList:horizontal, QScrollBar#funcScrollHBar:horizontal, QScrollBar#styleScrollHBar:horizontal {
     height: 2px;
     background-color: #2b2b2b;
 }
 
-QScrollBar::handle:horizontal {
+QScrollBar#btnList::handle:horizontal, QScrollBar#funcScrollHBar::handle:horizontal, QScrollBar#styleScrollHBar::handle:horizontal {
     background-color: #b2bdaf;
 }

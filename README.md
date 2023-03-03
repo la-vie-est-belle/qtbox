@@ -46,6 +46,13 @@ On the main window, click on the switch button to change the window theme.
 Click on the edit button or type `qtbox-qss` in the command window to open QSS Editor.
 <img src="https://img-blog.csdnimg.cn/7289f04c21824d0986f6adcb96a4be2e.png" width="600">
 
+
+## Support author
+Support author to make this project better. Thanks a lot. :)
+- [PayPal](https://www.paypal.com/paypalme/louisren666)
+- [WeChat or AliPay](https://pic4.zhimg.com/v2-6cad70f5aeeb9cc1a8a95c66b36a7ab7_r.jpg)
+
+
 ## Other links
 - [Github](https://github.com/la-vie-est-belle/qtbox)
 - [CSDN](https://blog.csdn.net/La_vie_est_belle/article/details/129037040)
