@@ -46,6 +46,9 @@ On the main window, click on the switch button to change the window theme.
 Click on the edit button or type `qtbox-qss` in the command window to open QSS Editor.
 <img src="https://img-blog.csdnimg.cn/7289f04c21824d0986f6adcb96a4be2e.png" width="600">
 
+## For C++ Qt users
+If you don't have a Python environment, download QtBox.zip which includes `qtbox.exe` executable file.
+<img src="https://img-blog.csdnimg.cn/edb04ba49468484696efec78f07bb740.jpeg" width="300">
 
 ## Support author
 Support author to make this project better. Thanks a lot. :)

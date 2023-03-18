@@ -34,8 +34,11 @@ class CodeViewerBody(QTextBrowser):
         self.set_signal()
         self.set_layout()
 
+    def set_window_attr(self):
+        self.setMouseTracking(True)
+
     def set_object_name(self):
-        self.setObjectName("codeViewer")
+        self.setObjectName("codeViewerBody")
         self.switch_btn.setObjectName("switchBtn")
         self.copy_btn.setObjectName("copyBtn")
 
@@ -50,9 +53,11 @@ class CodeViewerBody(QTextBrowser):
         self.switch_btn.setToolTip("Switch to PySide")
         self.switch_btn.setCursor(Qt.PointingHandCursor)
         self.switch_btn.setIcon(QIcon(str(RES_PATH / "images/switch.png")))
+        self.switch_btn.setIconSize(QSize(16, 16))
         self.copy_btn.setToolTip("Click to copy")
         self.copy_btn.setCursor(Qt.PointingHandCursor)
         self.copy_btn.setIcon(QIcon(str(RES_PATH / "images/copy.png")))
+        self.copy_btn.setIconSize(QSize(16, 16))
         self.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOn)
 
     def set_signal(self):
@@ -119,6 +124,10 @@ class CodeViewer(QWidget):
 
         self.start_x = None
         self.start_y = None
+        self.stretch_area_offset = 10
+        self.is_stretching = False
+        self.stretch_type = None
+        self.can_stretch = False
 
         self.bg_color = None
 
@@ -131,7 +140,11 @@ class CodeViewer(QWidget):
         self.set_layout()
 
     def set_window_attr(self):
-        self.resize(700, 500)
+        with open(RES_PATH/"config.json") as f:
+            config = json.loads(f.read())
+            self.resize(config["codeViewerWidth"], config["codeViewerHeight"])
+
+        self.setMouseTracking(True)
         self.setWindowFlag(Qt.FramelessWindowHint)
         self.setAttribute(Qt.WA_TranslucentBackground)
 
@@ -160,20 +173,38 @@ class CodeViewer(QWidget):
 
     def mousePressEvent(self, event):
         if event.button() == Qt.LeftButton:
-            self.start_x = event.x()
-            self.start_y = event.y()
+            if self.can_stretch:
+                self.is_stretching = True
+            else:
+                self.start_x = event.x()
+                self.start_y = event.y()
 
     def mouseMoveEvent(self, event):
-        if self.start_x is None or self.start_y is None:
-            return
+        if not self.is_stretching:
+            self.check_if_can_stretch(event.x(), event.y())
 
-        dis_x = event.x() - self.start_x
-        dis_y = event.y() - self.start_y
-        self.move(self.x() + dis_x, self.y() + dis_y)
+            if self.start_x is not None and self.start_y is not None:
+                dis_x = event.x() - self.start_x
+                dis_y = event.y() - self.start_y
+                self.move(self.x() + dis_x, self.y() + dis_y)
+        else:
+            if self.stretch_type == "H":
+                self.resize(event.x(), self.height())
+            elif self.stretch_type == "V":
+                self.resize(self.width(), event.y())
+            elif self.stretch_type == "VH":
+                self.resize(event.x(), event.y())
 
     def mouseReleaseEvent(self, event):
         self.start_x = None
         self.start_y = None
+
+        if self.is_stretching:
+            self.is_stretching = False
+            self.stretch_type = None
+            self.can_stretch = False
+            self.setCursor(Qt.ArrowCursor)
+            self.record_size_after_stretch()
 
     def paintEvent(self, event):
         super(CodeViewer, self).paintEvent(event)
@@ -183,6 +214,40 @@ class CodeViewer(QWidget):
         painter.setRenderHint(QPainter.Antialiasing)
         painter.drawRoundedRect(self.rect(), 9, 9)
 
+    def check_if_can_stretch(self, x, y):
+        if x >= self.width() - self.stretch_area_offset and self.stretch_area_offset <= y <= self.height() - self.stretch_area_offset:
+            # right border
+            self.setCursor(Qt.SizeHorCursor)
+            self.stretch_type = "H"
+            self.can_stretch = True
+
+        elif self.stretch_area_offset <= x <= self.width() - self.stretch_area_offset and y >= self.height() - self.stretch_area_offset:
+            # bottom border
+            self.setCursor(Qt.SizeVerCursor)
+            self.stretch_type = "V"
+            self.can_stretch = True
+
+        elif x > self.width() - self.stretch_area_offset and y > self.height() - self.stretch_area_offset:
+            # bottom right corner
+            self.setCursor(Qt.SizeFDiagCursor)
+            self.stretch_type = "VH"
+            self.can_stretch = True
+
+        else:
+            self.setCursor(Qt.ArrowCursor)
+            self.is_stretching = False
+            self.stretch_type = None
+            self.can_stretch = False
+
+    def record_size_after_stretch(self):
+        with open(RES_PATH / "config.json", "r", encoding="utf-8") as f:
+            config = json.loads(f.read())
+            config["codeViewerWidth"] = self.width()
+            config["codeViewerHeight"] = self.height()
+
+        with open(RES_PATH / "config.json", "w", encoding="utf-8") as f:
+            f.write(json.dumps(config, indent=4))
+
     def showMaximized(self):
         self.move(0, 0)
         desktop = QApplication.desktop()
@@ -190,7 +255,11 @@ class CodeViewer(QWidget):
 
     def showNormal(self):
         super(CodeViewer, self).showNormal()
-        self.resize(700, 500)
+
+        with open(RES_PATH/"config.json") as f:
+            config = json.loads(f.read())
+            self.resize(config["codeViewerWidth"], config["codeViewerHeight"])
+
         desktop = QApplication.desktop()
         self.move(desktop.width() // 2 - self.width() // 2, desktop.height() // 2 - self.height() // 2)
 

@@ -1,6 +1,9 @@
-QTextBrowser#codeViewer {
+QTextBrowser#codeViewerBody {
     background-color: #2b2b2b;
-    border: none;
+    border-top: none;
+    border-left: none;
+    border-right-width: 2px;
+    border-bottom-width: 2px;
 }
 
 QPushButton#copyBtn, QPushButton#switchBtn {

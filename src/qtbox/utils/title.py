@@ -25,11 +25,15 @@ class TitleWidget(QWidget):
         self.set_up()
 
     def set_up(self):
+        self.set_window_attr()
         self.set_object_name()
         self.set_style_sheet()
         self.set_widget()
         self.set_signal()
         self.set_layout()
+
+    def set_window_attr(self):
+        self.setMouseTracking(True)
 
     def set_object_name(self):
         self.setObjectName("windowTitle")
@@ -51,6 +55,9 @@ class TitleWidget(QWidget):
         self.minimize_btn.setIcon(QIcon(str(RES_PATH / "images/minimize.png")))
         self.maximize_or_normal_btn.setIcon(QIcon(str(RES_PATH / "images/maximize.png")))
         self.close_window_btn.setIcon(QIcon(str(RES_PATH / "images/close.png")))
+        self.minimize_btn.setIconSize(QSize(16, 16))
+        self.maximize_or_normal_btn.setIconSize(QSize(16, 16))
+        self.close_window_btn.setIconSize(QSize(16, 16))
 
     def set_signal(self):
         self.minimize_btn.clicked.connect(self.minimize)

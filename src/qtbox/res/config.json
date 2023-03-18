@@ -1,1 +1,9 @@
-{"theme": "black"}
+{
+    "theme": "white",
+    "mainWindowWidth": 1000,
+    "mainWindowHeight": 600,
+    "codeViewerWidth": 700,
+    "codeViewerHeight": 500,
+    "qssEditorWidth": 850,
+    "qssEditorHeight": 650
+}

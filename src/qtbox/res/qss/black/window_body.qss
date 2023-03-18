@@ -1,5 +1,6 @@
 QWidget#windowBody {
     background-color: #3b3f42;
+    border: none;
 }
 
 QPushButton#listBtn {

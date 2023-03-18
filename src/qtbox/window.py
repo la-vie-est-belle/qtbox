@@ -41,13 +41,12 @@ from qtbox.tablewidget import style as style_tablewidget
 from qtbox.widget import func as func_widget
 from qtbox.widget import style as style_widget
 
-VERSION = "1.1.4"
+VERSION = "1.1.5"
 
 UPDATES = """
-1. Added 1 style demo and 2 func demos for QTableWidget.\n
-2. Enriched widget choices in QSS Editor. \n
-3. Optimized suppress_stdout_stderr() in output.py. \n
-4. Eliminate the framework's QSS effect (e.g. QScrollBar's QSS effect) on demos.
+1. Fixed icon size.\n
+2. Made window resizable. \n
+3. Added exe for users without Python environment.
 """
 
 RES_PATH = Path(__file__).parent / "res"
@@ -165,6 +164,7 @@ class WindowBody(QWidget):
         self.set_up()
 
     def set_up(self):
+        self.set_window_attr()
         self.set_object_name()
         self.set_style_sheet()
         self.set_widget()
@@ -174,6 +174,9 @@ class WindowBody(QWidget):
         self.btn_list[0].setCheckable(True)
         self.btn_list[0].setChecked(True)
         self.set_tab_content("QCheckBox")
+
+    def set_window_attr(self):
+        self.setMouseTracking(True)
 
     def set_object_name(self):
         self.setObjectName("windowBody")
@@ -224,6 +227,11 @@ class WindowBody(QWidget):
         self.doc_btn.setFixedWidth(30)
         self.about_btn.setFixedWidth(30)
         self.switch_btn.setFixedWidth(30)
+        self.editor_btn.setIconSize(QSize(16, 16))
+        self.sponsor_btn.setIconSize(QSize(16, 16))
+        self.doc_btn.setIconSize(QSize(16, 16))
+        self.about_btn.setIconSize(QSize(16, 16))
+        self.switch_btn.setIconSize(QSize(16, 16))
         self.editor_btn.setToolTip("Open QSS editor")
         self.sponsor_btn.setToolTip("Sponsor")
         self.doc_btn.setToolTip("Open documentation")
@@ -476,6 +484,10 @@ class Window(QWidget):
 
         self.start_x = None
         self.start_y = None
+        self.stretch_area_offset = 10
+        self.is_stretching = False
+        self.stretch_type = None
+        self.can_stretch = False
 
         self.bg_color = None
 
@@ -489,7 +501,11 @@ class Window(QWidget):
         self.set_layout()
 
     def set_window_attr(self):
-        self.resize(1000, 600)
+        with open(RES_PATH/"config.json") as f:
+            config = json.loads(f.read())
+            self.resize(config["mainWindowWidth"], config["mainWindowHeight"])
+
+        self.setMouseTracking(True)
         self.setWindowTitle("Qt Box")
         self.setWindowFlag(Qt.FramelessWindowHint)
         self.setAttribute(Qt.WA_TranslucentBackground)
@@ -523,20 +539,38 @@ class Window(QWidget):
 
     def mousePressEvent(self, event):
         if event.button() == Qt.LeftButton:
-            self.start_x = event.x()
-            self.start_y = event.y()
+            if self.can_stretch:
+                self.is_stretching = True
+            else:
+                self.start_x = event.x()
+                self.start_y = event.y()
 
     def mouseMoveEvent(self, event):
-        if self.start_x is None or self.start_y is None:
-            return
+        if not self.is_stretching:
+            self.check_if_can_stretch(event.x(), event.y())
 
-        dis_x = event.x() - self.start_x
-        dis_y = event.y() - self.start_y
-        self.move(self.x() + dis_x, self.y() + dis_y)
+            if self.start_x is not None and self.start_y is not None:
+                dis_x = event.x() - self.start_x
+                dis_y = event.y() - self.start_y
+                self.move(self.x() + dis_x, self.y() + dis_y)
+        else:
+            if self.stretch_type == "H":
+                self.resize(event.x(), self.height())
+            elif self.stretch_type == "V":
+                self.resize(self.width(), event.y())
+            elif self.stretch_type == "VH":
+                self.resize(event.x(), event.y())
 
     def mouseReleaseEvent(self, event):
         self.start_x = None
         self.start_y = None
+
+        if self.is_stretching:
+            self.is_stretching = False
+            self.stretch_type = None
+            self.can_stretch = False
+            self.setCursor(Qt.ArrowCursor)
+            self.record_size_after_stretch()
 
     def paintEvent(self, event):
         super(Window, self).paintEvent(event)
@@ -546,6 +580,40 @@ class Window(QWidget):
         painter.setRenderHint(QPainter.Antialiasing)
         painter.drawRoundedRect(self.rect(), 9, 9)
 
+    def check_if_can_stretch(self, x, y):
+        if x >= self.width() - self.stretch_area_offset and self.stretch_area_offset <= y <= self.height() - self.stretch_area_offset:
+            # right border
+            self.setCursor(Qt.SizeHorCursor)
+            self.stretch_type = "H"
+            self.can_stretch = True
+
+        elif self.stretch_area_offset <= x <= self.width() - self.stretch_area_offset and y >= self.height() - self.stretch_area_offset:
+            # bottom border
+            self.setCursor(Qt.SizeVerCursor)
+            self.stretch_type = "V"
+            self.can_stretch = True
+
+        elif x > self.width() - self.stretch_area_offset and y > self.height() - self.stretch_area_offset:
+            # bottom right corner
+            self.setCursor(Qt.SizeFDiagCursor)
+            self.stretch_type = "VH"
+            self.can_stretch = True
+
+        else:
+            self.setCursor(Qt.ArrowCursor)
+            self.is_stretching = False
+            self.stretch_type = None
+            self.can_stretch = False
+
+    def record_size_after_stretch(self):
+        with open(RES_PATH / "config.json", "r", encoding="utf-8") as f:
+            config = json.loads(f.read())
+            config["mainWindowWidth"] = self.width()
+            config["mainWindowHeight"] = self.height()
+
+        with open(RES_PATH / "config.json", "w", encoding="utf-8") as f:
+            f.write(json.dumps(config, indent=4))
+
     def showMaximized(self):
         self.move(0, 0)
         desktop = QApplication.desktop()
@@ -553,7 +621,11 @@ class Window(QWidget):
 
     def showNormal(self):
         super(Window, self).showNormal()
-        self.resize(1000, 600)
+
+        with open(RES_PATH/"config.json") as f:
+            config = json.loads(f.read())
+            self.resize(config["mainWindowWidth"], config["mainWindowHeight"])
+
         desktop = QApplication.desktop()
         self.move(desktop.width() // 2 - self.width() // 2, desktop.height() // 2 - self.height() // 2)
 
@@ -567,7 +639,7 @@ class Window(QWidget):
             config["theme"] = "black"
 
         with open(RES_PATH / "config.json", "w", encoding="utf-8") as f:
-            f.write(json.dumps(config))
+            f.write(json.dumps(config, indent=4))
 
         self.set_style_sheet()
         self.window_title.reload_style_sheet()
