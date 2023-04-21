@@ -1,3 +1,10 @@
+v1.2.0
+1. Fixed known bugs.
+2. Updated the project structure.
+3. Added C++/Qt code for each demo.
+4. Adapted to high resolution screen. Thank @panhaovue for the tip.
+
+
 v1.1.5
 1. Fixed icon size.
 2. Made window resizable.

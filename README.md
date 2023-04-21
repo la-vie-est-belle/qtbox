@@ -37,7 +37,7 @@ Open a command window and use command `qtbox` to show Qt Box GUI.
 Right-click on a widget shown in the Style tab or Function tab, then you can view or download the code.
 <img src="https://img-blog.csdnimg.cn/501983f31ebe4cbfbdb9d95dbed96d53.png" width="600">
 
-When viewing the code, you can click on the switch button to show PyQt or PySide code.
+When viewing the code, you can click on the switch button to show PyQt, PySide or C++/Qt code.
 <img src="https://img-blog.csdnimg.cn/ab1828e5b1024ece81e4388ff96ac48a.png" width="600">
 
 On the main window, click on the switch button to change the window theme.
@@ -54,7 +54,6 @@ If you don't have a Python environment, download [QtBox.zip](https://la-vie-est-
 Support author to make this project better. Thanks a lot. :)
 - [PayPal](https://www.paypal.com/paypalme/louisren666)
 - [WeChat or AliPay](https://pic4.zhimg.com/v2-6cad70f5aeeb9cc1a8a95c66b36a7ab7_r.jpg)
-
 
 ## Other links
 - [Github](https://github.com/la-vie-est-belle/qtbox)
