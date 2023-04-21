@@ -23,7 +23,7 @@
     </a>
 </p>
 
-Qt Box contains many common and useful PyQt & PySide widget demos, which may save your time during development.
+Qt Box contains many common and useful PyQt & PySide & C++/Qt widget demos, which may save your time during development.
 
 ## Installation
 ```markdown
